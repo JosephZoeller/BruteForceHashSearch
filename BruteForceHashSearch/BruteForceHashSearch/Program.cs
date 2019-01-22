@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace BruteForceHashSearch
 {
@@ -9,19 +11,27 @@ namespace BruteForceHashSearch
         static char[] UpperCaseFrequency = { '_', 'E', 'T', 'A', 'I', 'N', 'O', 'S', 'H', 'R', 'D', 'L', 'U', 'C', 'M', 'F', 'W', 'Y', 'G', 'P', 'B', 'V', 'K', 'Q', 'J', 'X', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         static char[] LowerCaseFrequency = { '_', 'e', 't', 'a', 'i', 'n', 'o', 's', 'h', 'r', 'd', 'l', 'u', 'c', 'm', 'f', 'w', 'y', 'g', 'p', 'b', 'v', 'k', 'q', 'j', 'x', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         static char[] allCharactersFrequency = { '_', 'E', 'e', 'T', 't', 'A', 'a', 'I', 'i', 'N', 'n', 'O', 'o', 'S', 's', 'H', 'h', 'R', 'r', 'D', 'd', 'L', 'l', 'U', 'u', 'C', 'c', 'M', 'm', 'F', 'f', 'W', 'w', 'Y', 'v', 'G', 'g', 'P', 'p', 'B', 'b', 'V', 'v', 'K', 'k', 'Q', 'q', 'J', 'j', 'X', 'x', 'Z', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        static string[] guessWords;
+        static string[] guessWords = Properties.Resources.SINGLE.Split('\n');
 
-        static string[] hashesToSeek = { "2d51f5fdf967", "abf2e64923af", "3da307098c9d", "24617427e7a", "ff2c0c1307d1", "9030677652fa", "ddbca5100242", "51c1cc6f8622", "b741f2949e26", "8d5895232237", "60db807ad6c6" }; // TENSION_NECK preincluded
+        static string[] hashesToSeek = { "2d51f5fdf967", "abf2e64923af", "3da307098c9d", "24617427e7a", "ff2c0c1307d1", "9030677652fa", "ddbca5100242", "51c1cc6f8622", "b741f2949e26", "8d5895232237"}; // "60db807ad6c6" TENSION_NECK
         static char[][] parrallelCases = { allCharactersFrequency };
 
         static void Main(string[] args)
         {
-            guessWords = Properties.Resources.SINGLE.Split('\n');
-
-            int depth = 2;
+            int depth = 3;
             Console.WriteLine("Beginning Search, Depth: " + depth + "...");
+            
+            Console.WriteLine("# of all words: " + guessWords.Length);
+            List<string> guessWordList = new List<string>(guessWords.ToList());
+            for (int i = guessWordList.Count - 1; i >= 0; i--)
+            {
+                if (guessWordList[i].Length > 10)
+                    guessWordList.RemoveAt(i);
+            }
+            guessWords = guessWordList.ToArray();
+            Console.WriteLine("# of words with less than 10 characters: " + guessWords.Length);
             guessWords = ToUpperCaseAll(guessWords);
-            Console.WriteLine("Guess words have been uppercased");
+
             StartWordsComboSearch(depth, "", "");
             //StartCharactersComboSearch(depth, "", "");
 
@@ -37,37 +47,47 @@ namespace BruteForceHashSearch
 
         static void StartWordsComboSearch(int maxDepth, string prefix, string postfix)
         {
-            Console.WriteLine("Search: " + prefix + "<...>" + postfix);
+            StringBuilder sb = new StringBuilder("Search structure: "); sb.Append(prefix);
+            for (int i = 0; i < maxDepth - 1; i++) sb.Append("<...>_");
+            sb.Append("<...>"); sb.Append(postfix);
+            Console.WriteLine(sb);
+
             if (!(prefix + postfix == ""))
                 CheckString(prefix, postfix);
 
             if (maxDepth >= 1)
             {
-                foreach (string word in guessWords)
+                for (int i = 0; i < guessWords.Length; i++)
                 {
-                    CheckString(prefix + word, postfix);
-
+                    CheckString(prefix + guessWords[i], postfix);
+                    
                     if (maxDepth > 1)
-                        WordsRecurse(1, maxDepth, prefix + word, postfix);
+                        WordsRecurse(1, maxDepth, prefix + guessWords[i], postfix, i);
                 }
             }
         }
 
-        static void WordsRecurse(int currentDepth, int maxDepth, string baseString, string postfix)
+        static void WordsRecurse(int currentDepth, int maxDepth, string baseString, string postfix, int wordIndex)
         {
-            foreach (string word in guessWords)
+            for (int i = 0; i < guessWords.Length; i++)
             {
-                CheckString(baseString + "_" + word, postfix);
+                if (i == wordIndex) continue;
+                string combined = String.Join("_", guessWords[i], baseString);
+                CheckString(combined, postfix);
                 if (currentDepth + 1 < maxDepth)
                 {
-                    WordsRecurse(currentDepth + 1, maxDepth, baseString + "_" + word, postfix);
+                    WordsRecurse(currentDepth + 1, maxDepth, combined, postfix, i);
                 }
             }
         }
 
         static void StartCharactersComboSearch(int maxDepth, string prefix, string postfix)
         {
-            Console.WriteLine("Search: " + prefix + "<...>" + postfix);
+            StringBuilder sb = new StringBuilder("Search: "); sb.Append(prefix); sb.Append("<");
+            for (int i = 0; i < maxDepth; i++) sb.Append("#");
+            sb.Append(">"); sb.Append(postfix);
+            Console.WriteLine(sb);
+
             if (!(prefix + postfix == ""))
                 CheckString(prefix, postfix);
 
@@ -75,10 +95,11 @@ namespace BruteForceHashSearch
             {
                 foreach (char character in allCharactersFrequency)
                 {
-                    CheckString(prefix + character, postfix);
+                    string combined = string.Join(string.Empty, prefix, character);
 
+                    CheckString(combined, postfix);
                     if (maxDepth > 1)
-                        CharacterRecurse(1, maxDepth, prefix + character, postfix);
+                        CharacterRecurse(1, maxDepth, combined, postfix);
                 }
             }
         }
@@ -87,10 +108,12 @@ namespace BruteForceHashSearch
         {
             foreach (char character in allCharactersFrequency)
             {
-                CheckString(baseString + character, postfix);
+                string combined = string.Join(string.Empty, baseString, character);
+
+                CheckString(combined, postfix);
                 if (currentDepth + 1 < maxDepth)
                 {
-                    CharacterRecurse(currentDepth + 1, maxDepth, baseString + character, postfix);
+                    CharacterRecurse(currentDepth + 1, maxDepth, combined, postfix);
                 }
 
             }
@@ -99,7 +122,7 @@ namespace BruteForceHashSearch
 
         static void CheckString(string candidateString, string postfix = "")
         {
-            string checkString = (candidateString + postfix);
+            string checkString = string.Join(string.Empty, candidateString, postfix);
             string tryHash = (CityHash.CityHash.CityHash64WithSeeds(checkString + "\0", 0x9ae16a3b2f90404f, (uint)((checkString[0]) << 16) + (uint)checkString.Length) & 0xFFFFFFFFFFFF).ToString("x");
 
             //Console.WriteLine(checkString);
@@ -108,25 +131,10 @@ namespace BruteForceHashSearch
             count++;
             if (hashesToSeek.Contains(tryHash))
             {
-                Console.WriteLine("Found: " + candidateString);
-                string writeToFile = string.Format("Found: [{0}] \n", candidateString);
+                Console.WriteLine("Found: " + checkString);
+                string writeToFile = string.Format("Found: [{0}] \n", checkString);
                 System.IO.File.AppendAllText("FoundHashes.txt", writeToFile);
             }
-        }
-
-        static string[] ToUpperCaseAll(string[] words)
-        {
-
-            for (int i = 0; i < words.Length; i++)
-            {
-                string word = words[i];
-                if (word != null)
-                {
-                    words[i] = word.First().ToString().ToUpper() + word.Substring(1);
-                }
-            }
-            return words;
-
         }
 
         static string[] FirstLetterToUpperCaseAll(string[] words)
@@ -137,7 +145,37 @@ namespace BruteForceHashSearch
                 string word = words[i];
                 if (word != null)
                 {
+                    words[i] = word.First().ToString().ToUpper() + word.Substring(1).ToLower();
+                }
+            }
+            return words;
+
+        }
+
+        static string[] ToUpperCaseAll(string[] words)
+        {
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                string word = words[i];
+                if (word != null)
+                {
                     words[i] = word.ToUpper();
+                }
+            }
+            return words;
+
+        }
+
+        static string[] ToLowerCaseAll(string[] words)
+        {
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                string word = words[i];
+                if (word != null)
+                {
+                    words[i] = word.ToLower();
                 }
             }
             return words;
