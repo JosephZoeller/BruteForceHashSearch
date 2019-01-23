@@ -18,21 +18,31 @@ namespace BruteForceHashSearch
 
         static void Main(string[] args)
         {
-            int depth = 3;
+            int depth = 4;
+
+            /*
+            string[] educatedGuessWords = { "Eff_Null_Eff_qui_wmuwrp01", "Eff_Null_qui0_eqit_L", "Eff_Null_qui0_eqit_R", "Eff_cam", "Eff_def", "HM_qui0_eqit1_def", "HM_qui0_eqit0_def", "HM_qui0_main0_def" };
+
+            foreach(string word in educatedGuessWords)
+            {
+                CheckString(word);
+            }
+            */
+
             Console.WriteLine("Beginning Search, Depth: " + depth + "...");
-            
             Console.WriteLine("# of all words: " + guessWords.Length);
             List<string> guessWordList = new List<string>(guessWords.ToList());
             for (int i = guessWordList.Count - 1; i >= 0; i--)
             {
-                if (guessWordList[i].Length > 10)
+                if (guessWordList[i].Length > 6)
                     guessWordList.RemoveAt(i);
             }
             guessWords = guessWordList.ToArray();
-            Console.WriteLine("# of words with less than 10 characters: " + guessWords.Length);
-            guessWords = ToUpperCaseAll(guessWords);
+            Console.WriteLine("# of words with less than 6 characters: " + guessWords.Length);
+            guessWords = FirstLetterToUpperCaseAll(guessWords);
 
             StartWordsComboSearch(depth, "", "");
+
             //StartCharactersComboSearch(depth, "", "");
 
             /*
