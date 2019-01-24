@@ -61,9 +61,17 @@ namespace BruteForceHashSearch.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1080
+        ///   Looks up a localized string similar to quiet
+        ///qui
+        ///bacteria
+        ///parasite
+        ///metal
+        ///metalic
+        ///tension
+        ///1080
         ///10th
         ///1st
+        ///neck
         ///2
         ///2nd
         ///3rd
@@ -129,11 +137,97 @@ namespace BruteForceHashSearch.Properties {
         ///abacuses
         ///abada
         ///abaddon
-        ///abadejo        /// [rest of string was truncated]&quot;;.
+        ///abadejo
+        ///abadengo
+        ///abad [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SINGLE {
+        internal static string Dictionary {
             get {
-                return ResourceManager.GetString("SINGLE", resourceCulture);
+                return ResourceManager.GetString("Dictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eff
+        ///Null
+        ///qui
+        ///qui0
+        ///qui1
+        ///wmuwrp01
+        ///L
+        ///R
+        ///eqit
+        ///cam
+        ///def
+        ///eqit1
+        ///eqit0
+        ///main
+        ///main0
+        ///main1
+        ///Tension
+        ///TENSION
+        ///body
+        ///Parasite
+        ///Metalic
+        ///Main1
+        ///Main
+        ///Main0
+        ///Eqit0
+        ///Eqit1
+        ///Def
+        ///Cam
+        ///Eqit
+        ///Wmuwrp01
+        ///wrp01
+        ///Wrp01
+        ///Wmu
+        ///wmu
+        ///Qui
+        ///Qui1
+        ///Qui0
+        ///Quiet
+        ///quiet
+        ///wrp
+        ///Wrp
+        ///tension
+        ///metalic
+        ///Metalic
+        ///METALIC
+        ///QUI
+        ///QUI0
+        ///QUI1
+        ///WMU
+        ///CAM
+        ///DEF
+        ///EQIT
+        ///mimesis
+        ///mimetic
+        ///Mimetic
+        ///MIMETIC
+        ///Mimesis
+        ///MetalicBacteria
+        ///Bacteria
+        ///BACTERIA
+        ///PARASITE
+        ///Parasite
+        ///_
+        ///NULL
+        ///Null
+        ///null
+        ///0
+        ///1
+        ///2
+        ///3
+        ///4
+        ///5
+        ///6
+        ///7
+        ///8
+        ///9.
+        /// </summary>
+        internal static string GuessWords {
+            get {
+                return ResourceManager.GetString("GuessWords", resourceCulture);
             }
         }
     }
