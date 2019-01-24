@@ -18,7 +18,7 @@ namespace BruteForceHashSearch
 
         static void Main(string[] args)
         {
-            int depth = 7;
+            int depth = 5;
 
             Console.WriteLine("Beginning Search, Depth: " + depth + "...");
             Console.WriteLine("# of all words: " + guessWords.Length);
@@ -139,8 +139,9 @@ namespace BruteForceHashSearch
             count++;
             if (hashesToSeek.Contains(tryHash))
             {
-                Console.WriteLine("Found: " + checkString);
-                string writeToFile = string.Format("Found: [{0}] \n", checkString);
+                string foundHash = "Found: " + tryHash + " | " + checkString + "\n";
+                Console.WriteLine(foundHash);
+                string writeToFile = foundHash;
                 System.IO.File.AppendAllText("FoundHashes.txt", writeToFile);
             }
         }
