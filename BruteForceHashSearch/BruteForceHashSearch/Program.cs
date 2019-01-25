@@ -12,7 +12,7 @@ namespace BruteForceHashSearch
         {
             Stopwatch stopWatch = new Stopwatch();
 
-            int depth = 6; // 6 ~ 1 hour for MustContain
+            int depth = 5; // 6 ~ 1 hour for MustContain
             string[] dictionaryWords = Properties.Resources.Dictionary.Replace('\r','\n').Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             string[] guessWords = Properties.Resources.GuessWords.Replace('\r', '\n').Split(new char[]{'\n'}, StringSplitOptions.RemoveEmptyEntries);
             
@@ -20,8 +20,8 @@ namespace BruteForceHashSearch
             stopWatch.Start();
             Console.WriteLine("Beginning Search, Depth: " + depth + "...");
             
-            CharacterCombiner CC = new CharacterCombiner(depth, "", "");
-            //CC.StartCharactersComboSearch();
+            CharacterCombiner CC = new CharacterCombiner(depth, "qui_body_", "");
+            CC.StartCharactersComboSearch();
 
             foreach (string guessword in guessWords)
             {
