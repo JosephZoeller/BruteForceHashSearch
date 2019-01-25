@@ -26,8 +26,8 @@ namespace BruteForceHashSearch
             string checkString = string.Join(string.Empty, prefix, candidateString, postfix);
             string tryHash = TryHash(checkString);
 
-            Console.WriteLine(checkString);
-            Console.ReadKey();
+            //Console.WriteLine(checkString);
+            //Console.ReadKey();
 
             count++;
             if (hashesToSeek.Contains(tryHash))
@@ -46,8 +46,8 @@ namespace BruteForceHashSearch
                 string checkString = string.Join(string.Empty, prefix, candidateString.Insert(i, mustContain), postfix);
                 string tryHash = TryHash(checkString);
 
-                Console.WriteLine(checkString);
-                Console.ReadKey();
+                //Console.WriteLine(checkString);
+                //Console.ReadKey();
 
                 count++;
                 if (hashesToSeek.Contains(tryHash))

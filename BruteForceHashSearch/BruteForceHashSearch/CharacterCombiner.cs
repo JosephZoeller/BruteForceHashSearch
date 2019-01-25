@@ -9,7 +9,7 @@ namespace BruteForceHashSearch
     class CharacterCombiner
     {
         static char[] UpperCaseFrequency = { '_', 'E', 'T', 'A', 'I', 'N', 'O', 'S', 'H', 'R', 'D', 'L', 'U', 'C', 'M', 'F', 'W', 'Y', 'G', 'P', 'B', 'V', 'K', 'Q', 'J', 'X', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        static char[] LowerCaseFrequency = { '_', 'e', 't', 'a', 'i', 'n', 'o', 's', 'h', 'r', 'd', 'l', 'u', 'c', 'm', 'f', 'w', 'y', 'g', 'p', 'b', 'v', 'k', 'q', 'j', 'x', 'z', '0', '1', '2', '3' }; //  '4', '5', '6', '7', '8', '9' 
+        static char[] LowerCaseFrequency = { '_', 'e', 't', 'a', 'i', 'n', 'o', 's', 'h', 'r', 'd', 'l', 'u', 'c', 'm', 'f', 'w', 'y', 'g', 'p', 'b', 'v', 'k', 'q', '0', '1', 'j', 'x', 'z', '2', '3', '4', '5', '6', '7', '8', '9' };
         static char[] allCharactersFrequency = { '_', 'E', 'e', 'T', 't', 'A', 'a', 'I', 'i', 'N', 'n', 'O', 'o', 'S', 's', 'H', 'h', 'R', 'r', 'D', 'd', 'L', 'l', 'U', 'u', 'C', 'c', 'M', 'm', 'F', 'f', 'W', 'w', 'Y', 'v', 'G', 'g', 'P', 'p', 'B', 'b', 'V', 'v', 'K', 'k', 'Q', 'q', 'J', 'j', 'X', 'x', 'Z', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         
         string prefix;
