@@ -16,17 +16,30 @@ namespace BruteForceHashSearch
             hashesToSeek = hashes;
         }
 
-        private static string TryHash(string checkString)
+        private static string GetStrCode64Hash(string checkString)
         {
             return (CityHash.CityHash.CityHash64WithSeeds(checkString + "\0", 0x9ae16a3b2f90404f, (uint)((checkString[0]) << 16) + (uint)checkString.Length) & 0xFFFFFFFFFFFF).ToString("x");
+        }
+
+        private static string GetStrPath64Hash(string checkString)
+        {
+
+            byte[] seed1Bytes = new byte[sizeof(ulong)];
+            for (int i = checkString.Length - 1, j = 0; i >= 0 && j < sizeof(ulong); i--, j++)
+            {
+                seed1Bytes[j] = Convert.ToByte(checkString[i]);
+            }
+            return (CityHash.CityHash.CityHash64WithSeeds(checkString, 0x9ae16a3b2f90404f, BitConverter.ToUInt64(seed1Bytes, 0)) & 0x3FFFFFFFFFFFF).ToString("x");
         }
 
         public static void CheckString(string candidateString = "", string prefix = "", string postfix = "")
         {
             string checkString = string.Join(string.Empty, prefix, candidateString, postfix);
-            string tryHash = TryHash(checkString);
 
-            //Console.WriteLine(checkString);
+            string tryHash = GetStrCode64Hash(checkString);
+            //string tryHash = GetStrPath64Hash(checkString);
+
+            //Console.WriteLine(checkString + "  | " + tryHash);
             //Console.ReadKey();
 
             count++;
@@ -44,9 +57,11 @@ namespace BruteForceHashSearch
             for (int i = 0; i <= candidateString.Length; i++)
             {
                 string checkString = string.Join(string.Empty, prefix, candidateString.Insert(i, mustContain), postfix);
-                string tryHash = TryHash(checkString);
+                
+                string tryHash = GetStrCode64Hash(checkString);
+                //string tryHash = GetStrPath64Hash(checkString);
 
-                //Console.WriteLine(checkString);
+                //Console.WriteLine(checkString + "  | " + tryHash);
                 //Console.ReadKey();
 
                 count++;

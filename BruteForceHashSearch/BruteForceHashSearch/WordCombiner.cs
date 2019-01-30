@@ -44,7 +44,7 @@ namespace BruteForceHashSearch
                     HashComparer.CheckString(guessWords[i], prefix, postfix);
 
                     if (maxDepth > 1)
-                        WordsRecurse(1, maxDepth, prefix + guessWords[i], i);
+                        WordsRecurse(1, maxDepth, guessWords[i], i);
                 }
             }
         }
